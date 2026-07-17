@@ -30,6 +30,11 @@ tasks = [
 class TaskCreate(BaseModel):
     title: str
 
+#create another base model taskupdate to update tasks
+class TaskUpdate(BaseModel):
+    title: str
+    done: bool 
+
 @app.get("/")
 def root():
     return {
@@ -61,8 +66,17 @@ def get_task(id: int):
         status_code=404,
         detail=f"Task {id} not found"
     )
+
+#create new tasks and raise an exception if task is an empty sting
+
 @app.post("/tasks", status_code=201)
 def create_task(task: TaskCreate):
+    if task.title.strip() == "":
+        raise HTTPException(
+            status_code=400,
+            detail="Title cannot be empty"
+        )
+
     new_task = {
         "id": len(tasks) + 1,
         "title": task.title,
@@ -72,3 +86,31 @@ def create_task(task: TaskCreate):
     tasks.append(new_task)
 
     return new_task
+
+#update existing tasks
+@app.put("/tasks/{id}")
+def update_task(id: int, updated_task: TaskUpdate):
+    for task in tasks:
+        if task["id"] == id:
+            task["title"] = updated_task.title
+            task["done"] = updated_task.done
+            return task
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"Task {id} not found"
+    )
+
+#delete individual task
+
+@app.delete("/tasks/{id}", status_code=204)
+def delete_task(id: int):
+    for task in tasks:
+        if task["id"] == id:
+            tasks.remove(task)
+            return
+
+    raise HTTPException(
+        status_code=404,
+        detail=f"Task {id} not found"
+    )
