@@ -1,7 +1,13 @@
+#fast api to build the API and HTTP exception to out 404 if not found
 from fastapi import FastAPI, HTTPException
 
+#tells fast api what to expect i.e: title will be a text
+from pydantic import BaseModel
+
+#builds the api
 app = FastAPI()
 
+#the task route body
 tasks = [
     {
         "id": 1,
@@ -20,6 +26,10 @@ tasks = [
     }
 ]
 
+#creates a new model : taskcreate to let fastapi know what to expect
+class TaskCreate(BaseModel):
+    title: str
+
 @app.get("/")
 def root():
     return {
@@ -28,14 +38,18 @@ def root():
         "endpoints": ["/tasks"]
     }
 
+#health route
 @app.get("/health")
 def health():
     return {
         "status": "ok"
     }
+#task route
 @app.get("/tasks")
 def get_tasks():
     return tasks
+
+#task body route
 
 @app.get("/tasks/{id}")
 def get_task(id: int):
@@ -47,3 +61,14 @@ def get_task(id: int):
         status_code=404,
         detail=f"Task {id} not found"
     )
+@app.post("/tasks", status_code=201)
+def create_task(task: TaskCreate):
+    new_task = {
+        "id": len(tasks) + 1,
+        "title": task.title,
+        "done": False
+    }
+
+    tasks.append(new_task)
+
+    return new_task
