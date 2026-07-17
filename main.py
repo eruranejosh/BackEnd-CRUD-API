@@ -35,7 +35,7 @@ class TaskUpdate(BaseModel):
     title: str
     done: bool 
 
-@app.get("/")
+@app.get("/", summary="API information")
 def root():
     return {
         "name": "Task API",
@@ -44,7 +44,7 @@ def root():
     }
 
 #health route
-@app.get("/health")
+@app.get("/health", summary="health check")
 def health():
     return {
         "status": "ok"
@@ -56,7 +56,7 @@ def get_tasks():
 
 #task body route
 
-@app.get("/tasks/{id}")
+@app.get("/tasks/{id}", summary="get a task by ID")
 def get_task(id: int):
     for task in tasks:
         if task["id"] == id:
@@ -69,7 +69,7 @@ def get_task(id: int):
 
 #create new tasks and raise an exception if task is an empty sting
 
-@app.post("/tasks", status_code=201)
+@app.post("/tasks", status_code=201, summary="create a new task")
 def create_task(task: TaskCreate):
     if task.title.strip() == "":
         raise HTTPException(
@@ -88,7 +88,7 @@ def create_task(task: TaskCreate):
     return new_task
 
 #update existing tasks
-@app.put("/tasks/{id}")
+@app.put("/tasks/{id}", summary="update existing tasks")
 def update_task(id: int, updated_task: TaskUpdate):
     for task in tasks:
         if task["id"] == id:
@@ -103,7 +103,7 @@ def update_task(id: int, updated_task: TaskUpdate):
 
 #delete individual task
 
-@app.delete("/tasks/{id}", status_code=204)
+@app.delete("/tasks/{id}", status_code=204, summary="delete a task")
 def delete_task(id: int):
     for task in tasks:
         if task["id"] == id:
