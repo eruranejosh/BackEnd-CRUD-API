@@ -1,108 +1,115 @@
-BackEnd CRUD API
+# Task API with SQLite
 
-A simple RESTful CRUD API built with FastAPI that manages a to-do list in memory. The API allows users to create, read, update, and delete tasks, and includes interactive API documentation using Swagger UI.
+## Overview
 
-Features
+This project is a CRUD (Create, Read, Update, Delete) API built with **FastAPI**, **SQLModel**, and **SQLite**. It manages a to-do list and stores tasks in a SQLite database instead of an in-memory list.
 
-* Create new tasks
-* View all tasks
-* View a single task by ID
-* Update existing tasks
-* Delete tasks
-* In-memory data storage (no database)
-* Automatic interactive API documentation with Swagger UI
+Unlike the previous version, tasks are stored permanently and remain available after the server restarts.
 
-Technologies Used
+## Technologies Used
 
-* Python 3
-* FastAPI
-* Uvicorn
-* Pydantic
-* Swagger UI
+- Python 3
+- FastAPI
+- SQLModel
+- SQLite
+- Uvicorn
 
-Installation
+## Why SQLite?
 
-1. Clone the repository
+SQLite was chosen because it is lightweight, requires no separate database server, and stores all data in a single file. It is ideal for small applications and learning database fundamentals.
 
+## Database Location
+
+The SQLite database file is automatically created in the project folder as:
+
+```
+tasks.db
+```
+
+The application automatically creates the database and the required table if they do not already exist.
+
+## Installation
+
+Clone the repository:
+
+```bash
 git clone https://github.com/eruranejosh/BackEnd-CRUD-API.git
+```
+
+Move into the project folder:
+
+```bash
 cd BackEnd-CRUD-API
+```
 
-2. Create a virtual environment
+Create a virtual environment:
 
+```bash
 python3 -m venv backendapi
+```
 
-3. Activate the virtual environment
+Activate the virtual environment:
 
-macOS/Linux
-
+```bash
 source backendapi/bin/activate
+```
 
-Windows
+Install the required packages:
 
-backendapi\Scripts\activate
+```bash
+pip install -r requirements.txt
+```
 
-4. Install the required packages
+Run the application:
 
-pip install fastapi uvicorn
-
-5. Run the application
-
+```bash
 uvicorn main:app --reload
+```
 
-The server will start at:
+## Swagger UI
 
-http://127.0.0.1:8000
+Open your browser and visit:
 
-Swagger UI
-
-Interactive API documentation is available at:
-
+```
 http://127.0.0.1:8000/docs
+```
 
-Swagger UI allows you to test every endpoint directly from your browser using the Try it out button.
+## API Endpoints
 
-API Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /tasks | Get all tasks |
+| GET | /tasks/{id} | Get one task |
+| POST | /tasks | Create a new task |
+| PUT | /tasks/{id} | Update a task |
+| DELETE | /tasks/{id} | Delete a task |
 
-Method	Endpoint	Description
-GET	/	Returns API information
-GET	/health	Health check endpoint
-GET	/tasks	Retrieve all tasks
-GET	/tasks/{id}	Retrieve a task by its ID
-POST	/tasks	Create a new task
-PUT	/tasks/{id}	Update an existing task
-DELETE	/tasks/{id}	Delete a task
+## Example SQL Query
 
-Example cURL Request
+```sql
+SELECT * FROM task;
+```
 
-Create a new task:
+## Database Screenshot
 
-curl -i -X POST http://127.0.0.1:8000/tasks \
--H "Content-Type: application/json" \
--d '{"title":"Buy milk"}'
+Add a screenshot of the **task** table opened in **DB Browser for SQLite** here.
 
-Example response:
+Example:
 
-HTTP/1.1 201 Created
-{
-  "id": 4,
-  "title": "Buy milk",
-  "done": false
-}
+```
+![Database Screenshot](images/database.png)
+```
 
-Project Structure
+## Features
 
-BackEnd-CRUD-API/
-│── main.py
-│── requirements.txt
-│── README.md
-│── .gitignore
+- SQLite database
+- Automatic database creation
+- Automatic table creation
+- Full CRUD functionality
+- Input validation
+- Swagger UI documentation
+- Persistent data after server restart
 
-Notes
-
-* This project stores data in memory using a Python list.
-* Restarting the server resets the task list to the initial sample data.
-* This behavior is intentional for this assignment, as no database is used.
-
-Author
+## Author
 
 Joshua Erurane
