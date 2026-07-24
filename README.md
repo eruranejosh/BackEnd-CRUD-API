@@ -92,13 +92,7 @@ SELECT * FROM task;
 
 ## Database Screenshot
 
-Add a screenshot of the **task** table opened in **DB Browser for SQLite** here.
-
-Example:
-
-```
 ![Database Screenshot](images/database.png)
-```
 
 ## Features
 
