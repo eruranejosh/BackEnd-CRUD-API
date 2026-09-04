@@ -1,3 +1,4 @@
 backendapi/
 __pycache__/
 *.pyc
+.env
