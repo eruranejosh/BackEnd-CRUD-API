@@ -1,0 +1,82 @@
+[
+  {
+    "text": "New 4 bedroom duplex in Maitama, fully serviced.",
+    "expected": {
+      "property_type": "duplex",
+      "bedrooms": 4,
+      "location": "Maitama",
+      "condition": "new",
+      "servicing": "serviced"
+    }
+  },
+  {
+    "text": "Renovated 3 bedroom house located in Wuse 2. Comes with 24-hour security and water.",
+    "expected": {
+      "property_type": "house",
+      "bedrooms": 3,
+      "location": "Wuse 2",
+      "condition": "renovated",
+      "servicing": "serviced"
+    }
+  },
+  {
+    "text": "500 sqm residential land for sale in Gwarinpa.",
+    "expected": {
+      "property_type": "land",
+      "bedrooms": null,
+      "location": "Gwarinpa",
+      "condition": "unknown",
+      "servicing": "unknown"
+    }
+  },
+  {
+    "text": "Modern 2 bedroom apartment in Jabi, newly built and serviced.",
+    "expected": {
+      "property_type": "apartment",
+      "bedrooms": 2,
+      "location": "Jabi",
+      "condition": "new",
+      "servicing": "serviced"
+    }
+  },
+  {
+    "text": "Small office space available in Central Business District. Details on finishing not provided.",
+    "expected": {
+      "property_type": "office",
+      "bedrooms": null,
+      "location": "Central Business District",
+      "condition": "unknown",
+      "servicing": "unknown"
+    }
+  },
+  {
+    "text": "Shop available for rent along Kubwa Expressway. Property is in fair condition.",
+    "expected": {
+      "property_type": "shop",
+      "bedrooms": null,
+      "location": "Kubwa Expressway",
+      "condition": "fair",
+      "servicing": "unknown"
+    }
+  },
+  {
+    "text": "Beautiful property somewhere around Abuja. Contact the agent for more information.",
+    "expected": {
+      "property_type": "other",
+      "bedrooms": null,
+      "location": "Abuja",
+      "condition": "unknown",
+      "servicing": "unknown"
+    }
+  },
+  {
+    "text": "House available for sale. No location, number of rooms, or condition was provided.",
+    "expected": {
+      "property_type": "house",
+      "bedrooms": null,
+      "location": null,
+      "condition": "unknown",
+      "servicing": "unknown"
+    }
+  }
+]
