@@ -104,6 +104,34 @@ SELECT * FROM task;
 - Swagger UI documentation
 - Persistent data after server restart
 
+## A17 — LLM Property Enrichment Evaluation
+
+The property enrichment endpoint was evaluated using 8 hand-labeled
+real-estate test cases.
+
+### Evaluation Result
+
+- Test cases: 8
+- Fields checked: 40
+- Fields matched: 40
+- Match rate: 100.0%
+- Prompt version: property-enrich-v1
+- Evaluation date: September 7, 2026
+
+The evaluation included clear property descriptions as well as cases
+with missing or ambiguous information.
+
+All 8 cases matched the expected values for the key enrichment fields:
+
+- property_type
+- bedrooms
+- location
+- condition
+- servicing
+
+The evaluation was performed against the local `/enrich` API endpoint
+using real LLM responses.
+
 ## Author
 
 Joshua Erurane
