@@ -1,9 +1,25 @@
 #fast api to build the API and HTTP exception to out 404 if not found
 from fastapi import FastAPI, HTTPException
 
-#imort sqlmodel to store data 
+#import sqlmodel to store data 
 from sqlmodel import SQLModel, Field, Session, create_engine, select
 from typing import Optional
+import os
+from src.llm.schema import PropertyInput, PropertyEnrichment
+# Import Request so we can access the incoming HTTP request
+from fastapi import FastAPI, HTTPException, Request
+
+# Import the validation error handler
+from fastapi.exceptions import RequestValidationError
+
+# Import JSONResponse so we can return a custom 400 response
+from fastapi.responses import JSONResponse
+# Loads variables from the .env file
+from dotenv import load_dotenv
+
+# Load the .env file into the application environment
+load_dotenv()
+
 
 #tells fast api what to expect i.e: title will be a text
 from pydantic import BaseModel
@@ -167,3 +183,42 @@ def delete_task(task_id: int):
 
         session.delete(task)
         session.commit()
+
+# Convert FastAPI's default validation error from 422 to the 400
+# required by our assignment
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+
+    # Get the first validation error
+    error = exc.errors()[0]
+
+    # Get the field that caused the error
+    field = error["loc"][-1]
+
+    # Return a clear 400 response naming the invalid field
+    return JSONResponse(
+        status_code=400,
+        content={
+            "error": f"Invalid field: {field}",
+            "message": error["msg"],
+        },
+    )
+
+@app.post("/enrich", response_model=PropertyEnrichment)
+def enrich_property(property_input: PropertyInput):
+    if os.getenv("LLM_STUB") == "1":
+        return PropertyEnrichment(
+            property_type="other",
+            bedrooms=None,
+            location=None,
+            condition="unknown",
+            servicing="unknown",
+            summary="Stub response for property enrichment.",
+            confidence=0.0,
+            needs_review=True,
+        )
+
+    raise HTTPException(
+        status_code=503,
+        detail="LLM service is not connected yet"
+    )
